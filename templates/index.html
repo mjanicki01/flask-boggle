@@ -12,15 +12,15 @@
 
 <p>
 <form id="form" action="/" method="POST">
-    <label>Label</lable><br>
-    <input id = "id" type="text" value="value" name="name">
+    <label>Enter a word that is located on the board</lable><br>
+    <input id = "id" type="text" value="word" name="name">
     <button type="submit">Submit</button>
 </form>
 </p>
-<p id="word_display"> {{ input }} <p>
+<p id="word_display">You entered: {{ input }} <p>
 {% for msg in get_flashed_messages() %}
     <p>{{ msg }}</p>
 {% endfor %}
-<p id="score"> {{ session['score'] }} <p>
+<p id="score">Score: {{ session['score'] }} <p>
 
 {% endblock %}

@@ -1,12 +1,13 @@
 body {
     padding: 0;
     margin: 0;
+    text-align: center;
 }
 
 #content {
     margin: 50px auto;
     width: 50%;
-    text-align: center;
+
 }
 
 h3 {
@@ -21,10 +22,16 @@ td {
 
 table {
     margin: auto;
+    padding: 10px;
 }
 
 button {
     padding: 8px;
     border-width: 0px;
     border-radius: 2px;
+}
+
+
+button {
+    margin-top: 15px;
 }
