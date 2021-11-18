@@ -1,0 +1,30 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+#content {
+    margin: 50px auto;
+    width: 50%;
+    text-align: center;
+}
+
+h3 {
+    padding: 10px;
+}
+
+td {
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 24px;
+}
+
+table {
+    margin: auto;
+}
+
+button {
+    padding: 8px;
+    border-width: 0px;
+    border-radius: 2px;
+}

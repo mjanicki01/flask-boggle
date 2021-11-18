@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table>
+{% for y in session['board'] %}
+    <tr></tr>
+        {% for x in y %}
+                <td>{{ x }}</td>
+        {% endfor %}
+{% endfor %}
+</table>
+
+<p>
+<form id="form" action="/" method="POST">
+    <label>Label</lable><br>
+    <input id = "id" type="text" value="value" name="name">
+    <button type="submit">Submit</button>
+</form>
+</p>
+<p id="word_display"> {{ input }} <p>
+{% for msg in get_flashed_messages() %}
+    <p>{{ msg }}</p>
+{% endfor %}
+<p id="score"> {{ session['score'] }} <p>
+
+{% endblock %}
