@@ -6,39 +6,41 @@ boggle_game = Boggle()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "flowers"
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.debug = True
 
 toolbar = DebugToolbarExtension(app)
 
-board = boggle_game.make_board()
-found_words=[]
-
-@app.route('/')
-def index():
-    session['score'] = 0
-    session['board'] = board
-    return render_template("index.html", board = board)
 
 @app.route('/', methods=['GET', 'POST'])
-def submit_form():
-    input = request.form.get('name')
-    session['status'] = boggle_game.check_valid_word(board, input)
+def index():
+    """Create board & add to session storage"""
 
-    if session['status'] == 'not-on-board':
-        flash("This word is not on the board")
+    board = boggle_game.make_board()
+    session['board'] = board
+    num_attempts = session.get("num_attempts", 0)
+    highscore = session.get("highscore", 0)
 
-    if session['status'] == 'ok':
+    return render_template("index.html", board = board, highscore = highscore, num_attempts = num_attempts)
 
-        if input in session['found_words']:
-            flash("This word is on the board, but you've already found it")    
 
-        elif input not in found_words:
-            session['score'] += 1
-            found_words.append(input)
-            session['found_words'] = found_words
-            flash("This word is on the board")
+@app.route('/val', methods=["GET"])
+def val_word():
+    """Checks if submitted word from form is in referenced .txt file"""
 
-    elif session['status'] == 'not-word':
-        flash("This word is not a word")
+    input = request.args['word']
+    board = session['board']
+    word_stat = boggle_game.check_valid_word(board, input)
 
-    return render_template("index.html", input = input)
+    return jsonify({'result': word_stat})
+
+@app.route('/stats', methods=["POST"])
+def stats():
+    """Receives JSON score data and updates stats (number of attempts & current highscore in session)"""
+
+    score = request.json["score"]
+    num_attempts = session.get("num_attempts", 0)
+    highscore = session.get("highscore", 0)
+    session['num_attempts'] = num_attempts + 1
+    session['highscore'] = max(score, highscore)
+    return jsonify(brokeRecord = score > highscore)

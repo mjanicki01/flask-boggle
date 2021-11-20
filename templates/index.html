@@ -1,26 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<p id="timer"></p>
+
 <table>
-{% for y in session['board'] %}
-    <tr></tr>
-        {% for x in y %}
-                <td>{{ x }}</td>
+{% for row in board %}
+   <tr>
+        {% for cell in row %}
+            <td>{{ cell }}</td>
         {% endfor %}
+    </tr>
 {% endfor %}
 </table>
 
-<p>
-<form id="form" action="/" method="POST">
-    <label>Enter a word that is located on the board</lable><br>
-    <input id = "id" type="text" value="word" name="name">
+<p id="score">Score: 0</p>
+<p id="num_attempts">Games Played: {{ num_attempts }}</p>
+<p id="highscore">Highscore: {{highscore}}</p>
+
+<form id="form" method="POST">
+    <input id="form_input" type="text" value="word" name="name">
     <button type="submit">Submit</button>
 </form>
-</p>
-<p id="word_display">You entered: {{ input }} <p>
-{% for msg in get_flashed_messages() %}
-    <p>{{ msg }}</p>
-{% endfor %}
-<p id="score">Score: {{ session['score'] }} <p>
+
+<p id="msg"></p>
+
+<div id="word_display"><p><b>Words Found:</b></p></div>
+
 
 {% endblock %}

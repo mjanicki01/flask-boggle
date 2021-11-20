@@ -31,7 +31,18 @@ button {
     border-radius: 2px;
 }
 
+p {
+    padding: 10px;
+}
 
-button {
-    margin-top: 15px;
+.word_item {
+    padding: 2px ;
+    margin: 2px;
+}
+
+#word_display {
+    padding: 5px 10px 25px 10px;
+    margin: 10px auto;
+    background-color: rgb(247, 247, 247);
+    border-radius: 2px;
 }
