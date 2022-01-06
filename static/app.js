@@ -9,8 +9,13 @@ class BoggleGameboard {
     $("#form").on("submit", this.handleSubmit.bind(this));
     $("#num_attempts").hide();
     $("#highscore").hide();
-  }
 
+    $("#restart-btn").click(function(e){
+      location.reload()
+    })
+
+    $("#restart-btn").hide();
+  }
 
   addWord(word) {
     $("#word_display").append($(`<p class='word_item'>${word}</p>`));
@@ -27,8 +32,9 @@ class BoggleGameboard {
   displayTimer() {
     $("#timer").text(`Seconds: ${this.seconds}`)
   }
-
   
+ // Verify submitted word against words listed in words.txt
+ // Return output based on verification result
   async handleSubmit(event) {
     event.preventDefault();
     const word = document.getElementById("form_input").value;
@@ -38,7 +44,7 @@ class BoggleGameboard {
         if (this.words.includes(word.toUpperCase())) {
           this.displayMsg("Word already added")
         } else {
-          this.words.push(word.toUpperCase()); // tried using set to prevent duplicate words, but still added dup's to DOM anyway
+          this.words.push(word.toUpperCase());
           this.score += word.length;
           this.addWord(word)
           this.displayMsg("Added!")
@@ -55,7 +61,7 @@ class BoggleGameboard {
     $("#form_input").val("");
   }
 
-
+// Timer to reduce by 1 second, ending at 0. CSS styling unique for 0-10 seconds.
   async tick() {
     this.seconds -= 1;
     this.displayTimer();
@@ -71,6 +77,8 @@ class BoggleGameboard {
     }
   }
 
+// Change front-end DOM using jQuery at end of game session.
+//Post data to session & update front-end score & attempts based on response.
   async scoreGame() {
     $("#form").hide();
     $("#num_attempts").show();
@@ -80,10 +88,11 @@ class BoggleGameboard {
     } else {
       $("#score").text(`Final score: ${this.score}`);
       $("#highscore").show();
+      $("#restart-btn").show();
     }
   }
-}
 
+}
 
 
 let new_game = new BoggleGameboard()

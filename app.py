@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, session, flash
+from flask import Flask, request, jsonify, render_template, session
 from flask_debugtoolbar import DebugToolbarExtension
 from boggle import Boggle
 
@@ -18,7 +18,7 @@ def index():
 
     board = boggle_game.make_board()
     session['board'] = board
-    num_attempts = session.get("num_attempts", 0)
+    num_attempts = session.get("num_attempts", 1)
     highscore = session.get("highscore", 0)
 
     return render_template("index.html", board = board, highscore = highscore, num_attempts = num_attempts)
