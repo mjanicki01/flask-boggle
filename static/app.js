@@ -78,17 +78,17 @@ class BoggleGameboard {
   }
 
 // Change front-end DOM using jQuery at end of game session.
-//Post data to session & update front-end score & attempts based on response.
+// Post data to session & update front-end score & attempts based on response.
   async scoreGame() {
     $("#form").hide();
     $("#num_attempts").show();
+    $("#restart-btn").show();
     const resp = await axios.post("/stats", { 'score': this.score });
     if (resp.data.brokeRecord) {
       $("#score").text(`New record: ${this.score}`);
     } else {
       $("#score").text(`Final score: ${this.score}`);
       $("#highscore").show();
-      $("#restart-btn").show();
     }
   }
 
